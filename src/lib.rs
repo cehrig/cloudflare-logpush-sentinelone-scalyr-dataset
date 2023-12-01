@@ -95,10 +95,11 @@ async fn main(mut req: Request, env: Env, _: Context) -> Result<Response> {
         return Response::empty();
     };
 
+    let len = lines.len();
     let skel = events(name, lines)?;
     let status = send(token.to_string(), serde_json::to_string(&skel)?).await?;
 
-    console_log!("upstream: {}", status);
+    console_log!("sent {}, upstream: {}", len, status);
 
     Response::empty()
 }
